@@ -1,12 +1,26 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/usr/bin:/usr/local/bin:/bin:/usr/sbin:/usr/local/sbin"
+    }
+
     stages {
 
         stage('Clone Repository') {
             steps {
                 echo "Cloning repository..."
                 git branch: 'main', url: 'https://github.com/syrfy21/devops-fullstack-project.git'
+            }
+        }
+
+        stage('Check Docker Path') {
+            steps {
+                sh '''
+                    echo "PATH = $PATH"
+                    which docker || echo "docker not found!"
+                    ls -l /usr/bin/docker
+                '''
             }
         }
 
@@ -22,13 +36,9 @@ pipeline {
 
         stage('Deploy Container') {
             steps {
-                echo "Deploying Docker Container..."
                 sh '''
-                    # إيقاف الحاوية القديمة إن وُجدت
                     docker stop fullstack || true
                     docker rm fullstack || true
-
-                    # تشغيل الحاوية الجديدة
                     docker run -d -p 3000:3000 --name fullstack fullstack-app
                 '''
             }
