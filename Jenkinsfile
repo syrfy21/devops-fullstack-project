@@ -1,17 +1,25 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/usr/bin:/usr/local/bin:/bin:${env.PATH}"
+    }
+
     stages {
-        stage('Clone Repository') {
+        stage('Check Docker Access') {
             steps {
-                git branch: 'main', url: 'https://github.com/syrfy21/devops-fullstack-project.git'
+                sh '''
+                    echo "PATH = $PATH"
+                    id
+                    which docker
+                    docker --version
+                '''
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 sh '''
-                    echo "Building Docker Image..."
                     docker build -t fullstack-app .
                 '''
             }
@@ -20,12 +28,9 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                    echo "Stopping any existing container..."
                     docker stop fullstack || true
                     docker rm fullstack || true
-
-                    echo "Running new container..."
-                    docker run -d --restart=always -p 3000:3000 --name fullstack fullstack-app
+                    docker run -d -p 3000:3000 --name fullstack fullstack-app
                 '''
             }
         }
