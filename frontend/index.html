@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps Fullstack App</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <div id="products"></div>
+
+    <script>
+        fetch("http://localhost:3000/products")
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("products").innerHTML =
+                    data.map(p => `<p>${p.id}. ${p.name} - $${p.price}</p>`).join("");
+            });
+    </script>
+</body>
+</html>
