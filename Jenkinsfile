@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/syrfy21/devops-fullstack-project.git'
+                git branch: 'main', url: 'https://github.com/syrfy21/devops-fullstack-project.git'
             }
         }
 
