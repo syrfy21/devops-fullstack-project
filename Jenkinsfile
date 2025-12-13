@@ -3,13 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/syrfy21/devops-fullstack-project.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh '''
