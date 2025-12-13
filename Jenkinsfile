@@ -3,13 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                echo 'Cloning repository...'
-                git branch: 'main', url: 'https://github.com/syrfy21/devops-fullstack-project.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
