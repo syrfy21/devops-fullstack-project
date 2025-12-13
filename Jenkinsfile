@@ -3,20 +3,27 @@ pipeline {
 
     stages {
 
-        stage('Build Docker Image') {
+        stage('Checkout Code') {
             steps {
-                echo 'Building Docker image...'
-                sh 'docker build -t fullstack-app .'
+                git branch: 'main',
+                    url: 'https://github.com/syrfy21/devops-fullstack-project.git'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Deploying container...'
                 sh '''
-                    docker stop fullstack || true
-                    docker rm fullstack || true
-                    docker run -d -p 3000:3000 --name fullstack fullstack-app
+                  docker build -t fullstack-app .
+                '''
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                  docker stop fullstack-app || true
+                  docker rm fullstack-app || true
+                  docker run -d -p 3000:3000 --name fullstack-app fullstack-app
                 '''
             }
         }
