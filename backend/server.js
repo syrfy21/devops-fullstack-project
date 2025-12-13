@@ -30,6 +30,13 @@ app.post('/products', (req, res) => {
 
     res.json({ message: 'Product added', product: newProduct });
 });
+// Serve frontend
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
+
 
 app.listen(3000, () => {
     console.log("Backend running on port 3000");
