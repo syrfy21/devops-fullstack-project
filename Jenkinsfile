@@ -1,36 +1,25 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "/usr/bin:/usr/local/bin:/bin:/usr/sbin:/usr/local/sbin"
-    }
-
     stages {
-
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
-                echo "Cloning repository..."
                 git branch: 'main', url: 'https://github.com/syrfy21/devops-fullstack-project.git'
             }
         }
 
-        stage('Check Docker Path') {
+        stage('Check Docker') {
             steps {
                 sh '''
-                    echo "PATH = $PATH"
-                    which docker || echo "docker not found!"
-                    ls -l /usr/bin/docker
+                    docker --version
+                    docker ps
                 '''
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker Image..."
-                sh '''
-                    docker --version
-                    docker build -t fullstack-app .
-                '''
+                sh 'docker build -t fullstack-app .'
             }
         }
 
