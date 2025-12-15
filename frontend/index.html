@@ -1,29 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Restaurant Recommendation System</title>
+    <meta charset="UTF-8">
+    <title>Restaurant Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+            text-align: center;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Restaurant Recommendation System</h1>
+    <h1>🍽 Restaurant Recommendation System</h1>
 
-<input type="text" id="meal" placeholder="Enter your favorite meal">
-<button onclick="recommend()">Recommend</button>
+    <input type="text" id="mealInput" placeholder="Enter your favorite meal">
+    <button onclick="recommend()">Recommend</button>
 
-<p id="result"></p>
+    <div id="result"></div>
 
-<script>
-function recommend() {
-    const meal = document.getElementById("meal").value;
+    <script>
+        async function recommend() {
+            const meal = document.getElementById("mealInput").value.toLowerCase();
+            const resultDiv = document.getElementById("result");
 
-    fetch(`/recommend?meal=${meal}`)
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("result").innerText =
-                "Recommended Restaurant: " + data.restaurant;
-        });
-}
-</script>
+            if (!meal) {
+                resultDiv.innerHTML = "❌ Please enter a meal";
+                return;
+            }
+
+            const response = await fetch("/products");
+            const data = await response.json();
+
+            const match = data.find(item => item.meal.toLowerCase() === meal);
+
+            if (match) {
+                resultDiv.innerHTML = `✅ Recommended Restaurant: <b>${match.restaurant}</b>`;
+            } else {
+                resultDiv.innerHTML = "❌ No restaurant found for this meal";
+            }
+        }
+    </script>
 
 </body>
 </html>
