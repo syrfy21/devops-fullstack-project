@@ -7,26 +7,27 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// path to database
+// database
 const DB_PATH = path.join(__dirname, 'database.json');
 
-// ===== API: Get all restaurants =====
+// API
 app.get('/products', (req, res) => {
     const data = fs.readFileSync(DB_PATH, 'utf8');
-    const restaurants = JSON.parse(data);
-    res.json(restaurants);
+    res.json(JSON.parse(data));
 });
 
-// ===== Serve Frontend =====
-app.use(express.static(path.join(__dirname, '../frontend')));
+// ✅ FRONTEND PATH (الحل هنا)
+const FRONTEND_PATH = path.join(__dirname, '../frontend');
 
+// serve static files
+app.use(express.static(FRONTEND_PATH));
+
+// root route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(FRONTEND_PATH, 'index.html'));
 });
 
-// ===== Start Server =====
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
 });
 
