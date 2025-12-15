@@ -1,7 +1,7 @@
 [
-  { "id": 1, "restaurant": "Pizza Hut", "meal": "Pizza" },
-  { "id": 2, "restaurant": "Burger King", "meal": "Burger" },
-  { "id": 3, "restaurant": "Sushi Go", "meal": "Sushi" },
-  { "id": 4, "restaurant": "KFC", "meal": "Fried Chicken" }
+  { "meal": "shawarma", "restaurant": "Shawarma King" },
+  { "meal": "pizza", "restaurant": "Pizza Hut" },
+  { "meal": "burger", "restaurant": "Burger House" },
+  { "meal": "falafel", "restaurant": "Falafel Palace" }
 ]
 
