@@ -2,6 +2,7 @@
   { "meal": "shawarma", "restaurant": "Shawarma King" },
   { "meal": "pizza", "restaurant": "Pizza Hut" },
   { "meal": "burger", "restaurant": "Burger House" },
-  { "meal": "falafel", "restaurant": "Falafel Palace" }
+  { "meal": "falafel", "restaurant": "Falafel Palace" },
+  { "meal": "chicken", "restaurant": "Chicken Corner" }
 ]
 
